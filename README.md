@@ -1,11 +1,11 @@
-= Maze =
+# Maze
 Simple C++ Program that generates maze randomly and finds the way out.
 
-== Discription ==
+## Discription 
 discription
 
-=== Biuld ===
+### Biuld
 way to build
 
-=== License ===
+### License
 add license (Currently Copyright)
