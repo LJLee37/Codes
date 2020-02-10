@@ -130,7 +130,7 @@ int main() {
 	
 	MazeReset();
 	MazePrint();
-
+	//여기에 턴 표시방식 선택 추가
 	while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) {
 
 		Move();
