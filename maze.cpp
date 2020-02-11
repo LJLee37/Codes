@@ -124,6 +124,12 @@ void Move() {
 
 }
 
+void pause()
+{
+	printf("계속하려면 아무 키나 누르세요...\n");
+	getch();
+}
+
 int main() {
 	
 	Check[1][1] = true;
@@ -135,15 +141,13 @@ int main() {
 	char charIsOneByOne = 'N';
 	scanf("%c", &charIsOneByOne);
 	bool isOneByOne = (charIsOneByOne == 'Y' | charIsOneByOne == 'y')? true : false;
-	if(isOneByOne){
-		//한 턴 표시
+	while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) {
+		Move();
+		MazePrint();
+		if(isOneByOne)
+			pause();
 	}
-	else{
-		while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) {
-			Move();
-			MazePrint();
-		}
-	}
+
 	if (Turns < 0)
 		printf("길이 존재하지 않습니다.\n");
 	if (Route[Turns].row == 8 && Route[Turns].col == 8)
