@@ -131,16 +131,21 @@ int main() {
 	MazeReset();
 	MazePrint();
 	//여기에 턴 표시방식 선택 추가
-	while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) {
-
-		Move();
-		MazePrint();
-
+	printf("한 턴ㅆㅣㄱ 표시하시게게습니ㄲㅏ?(Y | N): ");
+	char charIsOneByOne = 'N';
+	scanf("%c", &charIsOneByOne);
+	bool isOneByOne = (charIsOneByOne == 'Y' | charIsOneByOne == 'y')? true : false;
+	if(isOneByOne){
+		//한 턴 표시
 	}
-
+	else{
+		while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) {
+			Move();
+			MazePrint();
+		}
+	}
 	if (Turns < 0)
 		printf("길이 존재하지 않습니다.\n");
-
 	if (Route[Turns].row == 8 && Route[Turns].col == 8)
 		printf("도착하였습니다.\n");
 
