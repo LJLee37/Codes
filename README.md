@@ -8,4 +8,4 @@ discription
 way to build
 
 ### License
-add license (Currently Copyright)
+MIT License. https://github.com/Nerdydream/LICENSE

@@ -1,5 +1,5 @@
 /*
-원저작자: nerdybird
+원저작자: Nerdydream
 수정: LJLee37
 */
 #define _CRT_SECURE_NO_WARNINGS
@@ -127,7 +127,7 @@ void Move() {
 void pause()
 {
 	printf("계속하려면 아무 키나 누르세요...\n");
-	getch();
+	getc(stdin);
 }
 
 int main() {
@@ -137,7 +137,7 @@ int main() {
 	MazeReset();
 	MazePrint();
 	//여기에 턴 표시방식 선택 추가
-	printf("한 턴ㅆㅣㄱ 표시하시게게습니ㄲㅏ?(Y | N): ");
+	printf("한 턴씩 표시하시겠습니까?(Y | N): ");
 	char charIsOneByOne = 'N';
 	scanf("%c", &charIsOneByOne);
 	bool isOneByOne = (charIsOneByOne == 'Y' | charIsOneByOne == 'y')? true : false;
