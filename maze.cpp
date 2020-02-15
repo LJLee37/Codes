@@ -104,8 +104,8 @@ int main()
 	MazePrint();
 	//여기에 턴 표시방식 선택 추가
 	printf("한 턴씩 표시하시겠습니까?(Y | N): ");
-	char charIsOneByOne = 'N';
-	scanf("%c", &charIsOneByOne);
+	char check = 'N';
+	scanf("%c", &check);
 	bool isOneByOne = (charIsOneByOne == 'Y' | charIsOneByOne == 'y')? true : false;
 	while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) 
 	{
