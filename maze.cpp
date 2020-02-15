@@ -126,7 +126,7 @@ void Move() {
 
 void pause()
 {
-	printf("계속하려면 [Enter]키를 누르세요...\n");
+	printf("계속하려면 [Enter]키를 누르세요...");
 	getc(stdin);
 }
 
