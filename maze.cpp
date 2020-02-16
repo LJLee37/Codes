@@ -47,6 +47,8 @@ void MazePrint()
 		for (int j = 0; j < 10; j++)
 			if (Route[Turns].row == i && Route[Turns].col == j)
 				printf("*");
+			else if ((i == 1 && j == 1) || (i == 8 && j == 8))
+				printf("#");
 			else
 				printf("%c", Maze[i][j] ? '◆' : '0');
 		printf("\n");
@@ -60,7 +62,9 @@ void CheckMaze()
 	for (int i = 0; i < 10; i++) 
 	{
 		for (int j = 0; j < 10; j++)
-			if (Check[i][j] == true)
+			if ((i == 1 && j == 1) || (i == 8 && j == 8))
+				printf("#");
+			else if (Check[i][j] == true)
 				printf("@");
 			else
 				printf("%c", Maze[i][j] ? '◆' : '0');
@@ -92,7 +96,7 @@ void Move()
 
 void pause()
 {
-	printf("계속하려면 [Enter]키를 누르세요...\n");
+	printf("계속하려면 [Enter]키를 누르세요...");
 	getc(stdin);
 }
 
