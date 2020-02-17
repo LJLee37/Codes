@@ -84,7 +84,27 @@ void Move()
 			Route[Turns].col = Route[Turns - 1].col + Movetype[dir].col;
 			Route[Turns].dir = dir;
 			Check[Route[Turns].row][Route[Turns].col] = true;
-			printf("Turn %d : (%d, %d, %d)\n\n", Turns, Route[Turns].row, Route[Turns].col, Route[Turns].dir);
+			printf("Turn %d : (%d, %d, ", Turns, Route[Turns].row, Route[Turns].col);
+			switch(Route[Turns].dir)
+			{
+				case 0:
+				printf("N");break;
+				case 1:
+				printf("NE:");break;
+				case 2:
+				printf("E");break;
+				case 3:
+				printf("SE");break;
+				case 4:
+				printf("S");break;
+				case 5:
+				printf("SW"); break;
+				case 6:
+				printf("W");break;
+				case 7:
+				printf("NW");break;
+			}
+			printf(")\n\n");
 			break;
 		}
 	if (dir == 8) 
