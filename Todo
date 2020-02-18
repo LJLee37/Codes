@@ -1,3 +1,2 @@
-방향을 숫자가 아닌 문장으로 표시(예: (1,1,4)X (1,1,남쪽)O)
-README 수정
-Find shortest route
+\README 수정
+최단거리 찾기
