@@ -90,7 +90,7 @@ void Move()
 				case 0:
 				printf("N");break;
 				case 1:
-				printf("NE:");break;
+				printf("NE");break;
 				case 2:
 				printf("E");break;
 				case 3:
@@ -110,7 +110,27 @@ void Move()
 	if (dir == 8) 
 	{
 		Turns--;
-		printf("Back to Turn %d : (%d, %d, %d)\n\n", Turns, Route[Turns].row, Route[Turns].col, Route[Turns].dir);
+		printf("Back to Turn %d : (%d, %d, ", Turns, Route[Turns].row, Route[Turns].col);
+		switch(Route[Turns].dir)
+		{
+			case 0:
+			printf("S");break;
+			case 1:
+			printf("SW");break;
+			case 2:
+			printf("W");break;
+			case 3:
+			printf("NW");break;
+			case 4:
+			printf("N");break;
+			case 5:
+			printf("NE"); break;
+			case 6:
+			printf("E");break;
+			case 7:
+			printf("SE");break;
+		}
+		printf(")\n\n");
 	}
 }
 
@@ -130,7 +150,7 @@ int main()
 	printf("한 턴씩 표시하시겠습니까?(Y | N): ");
 	char check = 'N';
 	scanf("%c", &check);
-	bool isOneByOne = (charIsOneByOne == 'Y' | charIsOneByOne == 'y')? true : false;
+	bool isOneByOne = (check == 'Y' || check == 'y')? true : false;
 	while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) 
 	{
 		Move();
