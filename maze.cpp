@@ -46,11 +46,11 @@ void MazePrint()
 	{
 		for (int j = 0; j < 10; j++)
 			if (Route[Turns].row == i && Route[Turns].col == j)
-				printf("*");
+				printf(" *");
 			else if ((i == 1 && j == 1) || (i == 8 && j == 8))
-				printf("#");
+				printf(" #");
 			else
-				printf("%c", Maze[i][j] ? '◆' : '0');
+				printf("%s", Maze[i][j] ? " ◆" : " 0");
 		printf("\n");
 	}
 	printf("\n\n");
@@ -63,11 +63,11 @@ void CheckMaze()
 	{
 		for (int j = 0; j < 10; j++)
 			if ((i == 1 && j == 1) || (i == 8 && j == 8))
-				printf("#");
+				printf(" #");
 			else if (Check[i][j] == true)
-				printf("@");
+				printf(" @");
 			else
-				printf("%c", Maze[i][j] ? '◆' : '0');
+				printf("%s", Maze[i][j] ? " ◆" : " 0");
 		printf("\n");
 	}
 	printf("\n\n");

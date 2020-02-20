@@ -4,7 +4,7 @@ Simple C++ Program that generates maze randomly and finds the way out.
 ## Discription 
 discription
 
-### Biuld
+### Build
 way to build
 
 ### License
