@@ -34,8 +34,8 @@ void MazePrint();
 void CheckMaze();
 void pause();
 void Move();
-stack DFSFind();
-queue BFSFind();
+stack<Routedata> DFSFind();
+queue<Routedata> BFSFind();
 
 //function definitions
 void MazeReset() 
