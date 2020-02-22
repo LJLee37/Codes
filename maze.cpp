@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <stack>
+#include <queue>
+using namespace std;
 
 //data types and global variables
 typedef struct 
@@ -25,7 +28,16 @@ bool Check[10][10] = { false };
 int Maze[10][10];
 int Turns = 0;
 
-//functions
+//function prototypes
+void MazeReset();
+void MazePrint();
+void CheckMaze();
+void pause();
+void Move();
+stack DFSFind();
+queue BFSFind();
+
+//function definitions
 void MazeReset() 
 {
 	srand((unsigned int)time(NULL));
