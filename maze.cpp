@@ -2,7 +2,6 @@
 원저작자: Nerdydream
 수정: LJLee37
 */
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
@@ -38,6 +37,8 @@ stack<Routedata> DFSFind();
 queue<Routedata> BFSFind();
 
 //function definitions
+
+//그대로 쓸 것들.
 void MazeReset() 
 {
 	srand((unsigned int)time(NULL));
@@ -50,24 +51,11 @@ void MazeReset()
 			else
 				Maze[i][j] = rand() % 2;
 }
-
-void MazePrint() 
+void pause()
 {
-	printf("\n");
-	for (int i = 0; i < 10; i++) 
-	{
-		for (int j = 0; j < 10; j++)
-			if (Route[Turns].row == i && Route[Turns].col == j)
-				printf(" *");
-			else if ((i == 1 && j == 1) || (i == 8 && j == 8))
-				printf(" #");
-			else
-				printf("%s", Maze[i][j] ? " ◆" : " 0");
-		printf("\n");
-	}
-	printf("\n\n");
+	printf("계속하려면 [Enter]키를 누르세요...");
+	getc(stdin);
 }
-
 void CheckMaze() 
 {
 	printf("\n\n");
@@ -85,11 +73,18 @@ void CheckMaze()
 	printf("\n\n");
 }
 
+//고쳐야 할 것들.
+stack<Routedata> DFSFind()
+{
+	stack<Routedata> route;
+
+}
 void Move() 
 {
 	int dir = 0;
 	for (dir = 0; dir < 8; dir++)
-		if (Check[Route[Turns].row + Movetype[dir].row][Route[Turns].col + Movetype[dir].col] == false && Maze[Route[Turns].row + Movetype[dir].row][Route[Turns].col + Movetype[dir].col] == 0) 
+		if (Check[Route[Turns].row + Movetype[dir].row][Route[Turns].col + Movetype[dir].col] == false &&
+		 Maze[Route[Turns].row + Movetype[dir].row][Route[Turns].col + Movetype[dir].col] == 0) 
 		{
 			Turns++;
 			Route[Turns].row = Route[Turns - 1].row + Movetype[dir].row;
@@ -145,11 +140,21 @@ void Move()
 		printf(")\n\n");
 	}
 }
-
-void pause()
+void MazePrint(stack<Routedata>& route)
 {
-	printf("계속하려면 [Enter]키를 누르세요...");
-	getc(stdin);
+	printf("\n");
+	for (int i = 0; i < 10; i++) 
+	{
+		for (int j = 0; j < 10; j++)
+			if (Route[Turns].row == i && Route[Turns].col == j)
+				printf(" *");
+			else if ((i == 1 && j == 1) || (i == 8 && j == 8))
+				printf(" #");
+			else
+				printf("%s", Maze[i][j] ? " ◆" : " 0");
+		printf("\n");
+	}
+	printf("\n\n");
 }
 
 //main
@@ -163,6 +168,9 @@ int main()
 	char check = 'N';
 	scanf("%c", &check);
 	bool isOneByOne = (check == 'Y' || check == 'y')? true : false;
+	
+	
+	
 	while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) 
 	{
 		Move();
