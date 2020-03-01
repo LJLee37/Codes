@@ -21,45 +21,71 @@ typedef struct
 	int col;
 	int dir;
 } Routedata;
-Movedata Movetype[8] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
-Routedata Route[100] = {{ 1, 1, 4 }};
-bool Check[10][10] = { false };
-int Maze[10][10];
-int Turns = 0;
+Movedata movetype[8] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
+bool check[10][10] = { false };
+int maze[10][10];
 
 //function prototypes
-void MazeReset();
-void MazePrint();
-void CheckMaze();
+void mazeReset();
+void mazePrint();
+void checkMaze();
 void pause();
 void Move();
-stack<Routedata> DFSFind();
-queue<Routedata> BFSFind();
+queue<Routedata>& DFSFind();
+queue<Routedata>& BFSFind();
 
 //function definitions
 
 //그대로 쓸 것들.
-void MazeReset() 
+void mazeReset() 
 {
 	srand((unsigned int)time(NULL));
 	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 10; j++)
 			if ((i == 0 || i == 9) || (j == 0 || j == 9))
-				Maze[i][j] = 1;
+				maze[i][j] = 1;
 			else if ((i == 1 && j == 1) || (i == 8 && j == 8))
-				Maze[i][j] = 0;
+				maze[i][j] = 0;
 			else
-				Maze[i][j] = rand() % 2;
+				maze[i][j] = rand() % 2;
 }
 void pause()
 {
 	printf("계속하려면 [Enter]키를 누르세요...");
 	getc(stdin);
 }
-void CheckMaze() 
+
+//고쳐야 할 것들.
+queue<Routedata>& DFSFind()
+{
+	stack<Routedata> route;
+	route.push(Routedata({1,1,4}));
+	bool foundRoute = false;
+	for (int dir = 0; dir < 8; dir++)
+		if (check[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == false &&
+		 maze[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == 0) 
+		{
+			Routedata tempRoute{route.top()};
+			tempRoute.row += movetype[dir].row;
+			tempRoute.col += movetype[dir].col;
+			tempRoute.dir = dir;
+			check[tempRoute.row][tempRoute.col] = true;
+			route.push(tempRoute);
+			foundRoute = true;
+		}
+	if(!foundRoute)
+	{
+		route.pop();
+		//더 추가.
+	}
+			
+}
+/*
+void checkMaze() 
 {
 	printf("\n\n");
 	for (int i = 0; i < 10; i++) 
+Routedata Route[100] = {{ 1, 1, 4 }};
 	{
 		for (int j = 0; j < 10; j++)
 			if ((i == 1 && j == 1) || (i == 8 && j == 8))
@@ -72,26 +98,12 @@ void CheckMaze()
 	}
 	printf("\n\n");
 }
-
-//고쳐야 할 것들.
-stack<Routedata> DFSFind()
+*/
+/*
+void mazePrint(queue<Routedata>& route)
 {
-	stack<Routedata> route;
-
-}
-void Move() 
-{
-	int dir = 0;
-	for (dir = 0; dir < 8; dir++)
-		if (Check[Route[Turns].row + Movetype[dir].row][Route[Turns].col + Movetype[dir].col] == false &&
-		 Maze[Route[Turns].row + Movetype[dir].row][Route[Turns].col + Movetype[dir].col] == 0) 
-		{
-			Turns++;
-			Route[Turns].row = Route[Turns - 1].row + Movetype[dir].row;
-			Route[Turns].col = Route[Turns - 1].col + Movetype[dir].col;
-			Route[Turns].dir = dir;
-			Check[Route[Turns].row][Route[Turns].col] = true;
-			printf("Turn %d : (%d, %d, ", Turns, Route[Turns].row, Route[Turns].col);
+	
+	printf("Turn %d : (%d, %d, ", Turns, Route[Turns].row, Route[Turns].col);
 			switch(Route[Turns].dir)
 			{
 				case 0:
@@ -113,35 +125,27 @@ void Move()
 			}
 			printf(")\n\n");
 			break;
-		}
-	if (dir == 8) 
+	printf("Back to Turn %d : (%d, %d, ", Turns, Route[Turns].row, Route[Turns].col);
+	switch(Route[Turns].dir)
 	{
-		Turns--;
-		printf("Back to Turn %d : (%d, %d, ", Turns, Route[Turns].row, Route[Turns].col);
-		switch(Route[Turns].dir)
-		{
-			case 0:
-			printf("S");break;
-			case 1:
-			printf("SW");break;
-			case 2:
-			printf("W");break;
-			case 3:
-			printf("NW");break;
-			case 4:
-			printf("N");break;
-			case 5:
-			printf("NE"); break;
-			case 6:
-			printf("E");break;
-			case 7:
-			printf("SE");break;
-		}
-		printf(")\n\n");
+		case 0:
+		printf("S");break;
+		case 1:
+		printf("SW");break;
+		case 2:
+		printf("W");break;
+		case 3:
+		printf("NW");break;
+		case 4:
+		printf("N");break;
+		case 5:
+		printf("NE"); break;
+		case 6:
+		printf("E");break;
+		case 7:
+		printf("SE");break;
 	}
-}
-void MazePrint(stack<Routedata>& route)
-{
+	printf(")\n\n");
 	printf("\n");
 	for (int i = 0; i < 10; i++) 
 	{
@@ -156,21 +160,19 @@ void MazePrint(stack<Routedata>& route)
 	}
 	printf("\n\n");
 }
+*/
 
 //main
 int main()
 {
-	Check[1][1] = true;
-	MazeReset();
-	MazePrint();
-	//여기에 턴 표시방식 선택 추가
+	check[1][1] = true;
+	mazeReset();
+	//mazePrint();
 	printf("한 턴씩 표시하시겠습니까?(Y | N): ");
 	char check = 'N';
 	scanf("%c", &check);
 	bool isOneByOne = (check == 'Y' || check == 'y')? true : false;
-	
-	
-	
+	/*
 	while (Turns >= 0 && !(Route[Turns].row == 8 && Route[Turns].col == 8)) 
 	{
 		Move();
@@ -183,5 +185,6 @@ int main()
 	if (Route[Turns].row == 8 && Route[Turns].col == 8)
 		printf("도착하였습니다.\n");
 	CheckMaze();
+	*/
 	return 0;
 }
