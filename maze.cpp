@@ -7,6 +7,7 @@
 #include <time.h>
 #include <stack>
 #include <queue>
+#include <memory>
 using namespace std;
 
 //data types and global variables
@@ -24,6 +25,7 @@ typedef struct
 Movedata movetype[8] = { {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1} };
 bool check[10][10] = { false };
 int maze[10][10];
+const Routedata INIT_DATA = {1,1,4};
 
 //function prototypes
 void mazeReset();
@@ -31,8 +33,8 @@ void mazePrint();
 void checkMaze();
 void pause();
 void Move();
-queue<Routedata>& DFSFind();
-queue<Routedata>& BFSFind();
+queue<shared_ptr<Routedata>>& DFSFind();
+queue<shared_ptr<Routedata>>& BFSFind();
 
 //function definitions
 
@@ -56,28 +58,45 @@ void pause()
 }
 
 //고쳐야 할 것들.
-queue<Routedata>& DFSFind()
+queue<shared_ptr<Routedata>>& DFSFind()
 {
-	stack<Routedata> route;
-	route.push(Routedata({1,1,4}));
-	bool foundRoute = false;
-	for (int dir = 0; dir < 8; dir++)
-		if (check[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == false &&
-		 maze[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == 0) 
-		{
-			Routedata tempRoute{route.top()};
-			tempRoute.row += movetype[dir].row;
-			tempRoute.col += movetype[dir].col;
-			tempRoute.dir = dir;
-			check[tempRoute.row][tempRoute.col] = true;
-			route.push(tempRoute);
-			foundRoute = true;
-		}
-	if(!foundRoute)
+	stack<shared_ptr<Routedata>> route;
+	route.push(INIT_DATA);
+	queue<shared_ptr<Routedata>> retval;
+	retval.push(INIT_DATA);
+	
+	while (!check[8][8])
 	{
-		route.pop();
-		//더 추가.
+		int dir = 0
+		for (; dir < 8; dir++)
+			if (check[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == false &&
+			 maze[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == 0) 
+			{
+				shared_ptr<Routedata> tempRoute = new Routedata(route.top());
+				tempRoute->row += movetype[dir].row;
+				tempRoute->col += movetype[dir].col;
+				tempRoute->dir = dir;
+				check[tempRoute->row][tempRoute->col] = true;
+				route.push(tempRoute);
+				retval.push(tempRoute);
+				break;
+			}
+		if(dir == 8)
+		{
+			shared_ptr<Routedata> tempRoute1 = route.top();
+			route.pop();
+			shared_ptr<Routedata> tempRoute2 = new Routedata(*(route.top()));
+			if(tempRoute2->dir >= 4)
+				tempRoute2->dir -= 4;
+			else
+				tempRoute2->dir += 4;
+			retval.push(tempRoute2);
+			//아오 이거 엄청 복잡해지고 귀찮고 어렵네.
+			//계속 전으로 되돌아 가야 한다면?
+		}
 	}
+	
+	
 			
 }
 /*
