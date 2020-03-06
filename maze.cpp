@@ -67,7 +67,7 @@ queue<shared_ptr<Routedata>>& DFSFind()
 	
 	while (!check[8][8])
 	{
-		int dir = 0
+		int dir = 0;
 		for (; dir < 8; dir++)
 			if (check[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == false &&
 			 maze[route.top().row + movetype[dir].row][route.top().col + movetype[dir].col] == 0) 
